@@ -535,7 +535,7 @@
     <source src="music.mp3" type="audio/mpeg" />
   </audio>
 
-  <div class="envelope-screen" id="intro">
+  <div class="envelope-screen" id="intro" role="button" aria-label="Open the letter" tabindex="0">
     <div class="envelope" id="envelope" role="button" aria-label="Open the letter" tabindex="0">
       <div class="letter-peek"></div>
       <div class="flap"></div>
@@ -543,7 +543,7 @@
     <div class="envelope-text">
       Tap the envelope to open the letter, then play the music when you are ready.
     </div>
-    <button class="music-btn" onclick="playMusic()">Play Music</button>
+    <button class="music-btn" onclick="event.stopPropagation(); playMusic();">Play Music</button>
   </div>
 
   <div class="site-shell" id="siteShell">
@@ -711,7 +711,11 @@ If there is ever a chance to rebuild what I broke, I know it would take patience
     });
     }
 
+    let introOpened = false;
+
     function openLetter() {
+      if (introOpened) return;
+      introOpened = true;
       const envelope = document.getElementById('envelope');
       const intro = document.getElementById('intro');
 
@@ -762,17 +766,29 @@ If there is ever a chance to rebuild what I broke, I know it would take patience
 
     function goToFirstPage() {
       const envelopeEl = document.getElementById('envelope');
-    envelopeEl.addEventListener('click', openLetter);
-    envelopeEl.addEventListener('touchend', (event) => {
+    const introEl = document.getElementById('intro');
+
+    introEl.addEventListener('click', openLetter);
+    introEl.addEventListener('touchend', (event) => {
       event.preventDefault();
       openLetter();
     }, { passive: false });
-    envelopeEl.addEventListener('keydown', (event) => {
+    introEl.addEventListener('keydown', (event) => {
       if (event.key === 'Enter' || event.key === ' ') {
         event.preventDefault();
         openLetter();
       }
     });
+
+    envelopeEl.addEventListener('click', (event) => {
+      event.stopPropagation();
+      openLetter();
+    });
+    envelopeEl.addEventListener('touchend', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      openLetter();
+    }, { passive: false });
 
     showPage(0);
     }
