@@ -536,7 +536,7 @@
   </audio>
 
   <div class="envelope-screen" id="intro">
-    <div class="envelope" onclick="openLetter()" id="envelope">
+    <div class="envelope" id="envelope" role="button" aria-label="Open the letter" tabindex="0">
       <div class="letter-peek"></div>
       <div class="flap"></div>
     </div>
@@ -761,7 +761,20 @@ If there is ever a chance to rebuild what I broke, I know it would take patience
     }
 
     function goToFirstPage() {
-      showPage(0);
+      const envelopeEl = document.getElementById('envelope');
+    envelopeEl.addEventListener('click', openLetter);
+    envelopeEl.addEventListener('touchend', (event) => {
+      event.preventDefault();
+      openLetter();
+    }, { passive: false });
+    envelopeEl.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        openLetter();
+      }
+    });
+
+    showPage(0);
     }
 
     function startTypewriter(text, element, speed) {
