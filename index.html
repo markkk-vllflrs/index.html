@@ -1,379 +1,526 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For You</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For You</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Georgia, serif;
+    }
 
-<style>
+    html {
+      scroll-behavior: smooth;
+    }
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family: Georgia, serif;
-}
+    body {
+      background: linear-gradient(to bottom, #fdf6f7, #f7e6ea);
+      color: #4b2e2e;
+      overflow-x: hidden;
+    }
 
-body{
-background:linear-gradient(to bottom,#fdf6f7,#f7e6ea);
-color:#4b2e2e;
-line-height:1.7;
-overflow-x:hidden;
-}
+    /* Envelope Intro */
+    .envelope-screen {
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(to bottom, #f8e7eb, #f4dce2);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      z-index: 9999;
+      transition: opacity 0.8s ease;
+    }
 
-.container{
-max-width:800px;
-margin:auto;
-padding:60px 20px;
-}
+    .envelope {
+      width: 240px;
+      height: 150px;
+      background: #fff8fa;
+      position: relative;
+      border-radius: 8px;
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.12);
+      cursor: pointer;
+      overflow: hidden;
+    }
 
-.hero{
-height:100vh;
-display:flex;
-align-items:center;
-justify-content:center;
-text-align:center;
-padding:20px;
-}
+    .envelope::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, #fffdfd, #f6e9ec);
+      z-index: 1;
+    }
 
-.hero-box{
-background:rgba(255,255,255,0.8);
-padding:40px;
-border-radius:20px;
-box-shadow:0 10px 30px rgba(0,0,0,0.08);
-}
+    .flap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #e8c8cd;
+      clip-path: polygon(0 0, 100% 0, 50% 62%);
+      transform-origin: top;
+      transition: transform 0.9s ease;
+      z-index: 3;
+    }
 
-h1{
-font-size:2.5rem;
-margin-bottom:20px;
-color:#7b3f46;
-}
+    .letter-peek {
+      position: absolute;
+      left: 50%;
+      bottom: 18px;
+      transform: translateX(-50%);
+      width: 180px;
+      height: 90px;
+      background: #ffffff;
+      border-radius: 6px;
+      z-index: 2;
+      transition: transform 0.8s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
 
-h2{
-font-size:1.6rem;
-margin-bottom:15px;
-color:#8f4d56;
-}
+    .open .flap {
+      transform: rotateX(180deg);
+    }
 
-p{
-margin-bottom:14px;
-}
+    .open .letter-peek {
+      transform: translateX(-50%) translateY(-28px);
+    }
 
-.btn{
-display:inline-block;
-margin-top:20px;
-padding:12px 25px;
-background:#a85d67;
-color:white;
-border:none;
-border-radius:999px;
-cursor:pointer;
-font-size:1rem;
-transition:.3s;
-}
+    .envelope-text {
+      margin-top: 22px;
+      color: #7b5560;
+      opacity: 0.9;
+      font-size: 1rem;
+      text-align: center;
+      padding: 0 20px;
+    }
 
-.btn:hover{
-background:#8f4d56;
-transform:translateY(-2px);
-}
+    /* Main content */
+    .container {
+      max-width: 850px;
+      margin: auto;
+      padding: 90px 20px 60px;
+      position: relative;
+      z-index: 2;
+    }
 
-.section{
-background:rgba(255,255,255,0.85);
-padding:30px;
-border-radius:20px;
-margin-bottom:30px;
-box-shadow:0 6px 20px rgba(0,0,0,0.06);
-opacity:0;
-transform:translateY(40px);
-transition:1s;
-}
+    .section {
+      background: rgba(255, 255, 255, 0.86);
+      padding: 32px;
+      border-radius: 22px;
+      margin-bottom: 30px;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.06);
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 1s ease, transform 1s ease;
+    }
 
-.section.show{
-opacity:1;
-transform:translateY(0);
-}
+    .section.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
 
-.signature{
-margin-top:20px;
-font-style:italic;
-}
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 18px;
+      color: #7b3f46;
+    }
 
-.footer{
-text-align:center;
-padding:40px;
-opacity:.7;
-}
+    h2 {
+      font-size: 1.6rem;
+      margin-bottom: 14px;
+      color: #8f4d56;
+    }
 
-/* Lantern Scene */
+    p {
+      line-height: 1.85;
+      margin-bottom: 14px;
+      font-size: 1.03rem;
+    }
 
-.lantern-scene{
-position:relative;
-height:100vh;
-background:linear-gradient(to top,#050510,#0d0d2b,#1a1a40);
-overflow:hidden;
-display:flex;
-justify-content:center;
-align-items:center;
-text-align:center;
-color:white;
-}
+    .signature {
+      margin-top: 18px;
+      font-style: italic;
+    }
 
-.lantern-message{
-position:absolute;
-z-index:2;
-max-width:600px;
-padding:30px;
-}
+    /* Lantern Scene */
+    .lantern-scene {
+      position: relative;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 50% 20%, rgba(255,255,255,0.08), transparent 25%),
+        linear-gradient(to top, #02020a, #0b0b2b, #161640);
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: white;
+      padding: 40px 20px;
+    }
 
-.lantern-message h2{
-color:white;
-margin-bottom:15px;
-}
+    .lantern-message {
+      position: absolute;
+      z-index: 3;
+      max-width: 650px;
+      padding: 30px;
+    }
 
-#lanternCanvas{
-position:absolute;
-width:100%;
-height:100%;
-}
+    .lantern-message h2 {
+      color: #ffffff;
+      margin-bottom: 15px;
+      font-size: 2rem;
+    }
 
-</style>
+    .lantern-message p {
+      color: rgba(255,255,255,0.92);
+    }
+
+    .wish-btn {
+      margin-top: 16px;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 999px;
+      background: rgba(255, 193, 94, 0.95);
+      color: #3f2508;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      box-shadow: 0 8px 18px rgba(255, 193, 94, 0.22);
+    }
+
+    .wish-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    #lanternCanvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      cursor: pointer;
+    }
+
+    /* Stars */
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.7;
+      animation: twinkle 3s infinite alternate;
+      z-index: 0;
+    }
+
+    @keyframes twinkle {
+      from { opacity: 0.2; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1.2); }
+    }
+
+    /* Fireflies */
+    .firefly {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: rgba(255, 230, 120, 0.95);
+      border-radius: 50%;
+      box-shadow: 0 0 12px rgba(255, 230, 120, 0.8);
+      opacity: 0.65;
+      animation: fireflyFloat 6s ease-in-out infinite;
+      z-index: 0;
+    }
+
+    @keyframes fireflyFloat {
+      0% { transform: translate(0, 0); opacity: 0.35; }
+      50% { transform: translate(16px, -36px); opacity: 0.95; }
+      100% { transform: translate(0, 0); opacity: 0.35; }
+    }
+
+    .footer {
+      text-align: center;
+      padding: 28px 20px 42px;
+      color: #7d5c60;
+      opacity: 0.8;
+      background: #f7e6ea;
+    }
+
+    @media (max-width: 640px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      h2 {
+        font-size: 1.35rem;
+      }
+
+      .section {
+        padding: 24px 18px;
+      }
+
+      .lantern-message {
+        padding: 20px;
+      }
+
+      .lantern-message h2 {
+        font-size: 1.6rem;
+      }
+    }
+  </style>
 </head>
-
 <body>
 
-<section class="hero">
-<div class="hero-box">
-
-<h1>To the Woman I Hurt</h1>
-
-<p>
-This website is not here to erase what I did.
-</p>
-
-<p>
-It is here because I want to be honest about the pain I caused you
-and take responsibility for it.
-</p>
-
-<button class="btn" onclick="scrollToContent()">Read My Heart</button>
-
-</div>
-</section>
-
-<div class="container" id="content">
-
-<div class="section">
-<h2>I Am Truly Sorry</h2>
-
-<p>
-I know that my actions hurt you deeply,
-and I want to say this clearly without excuses —
-I am truly sorry.
-</p>
-
-<p>
-You did not deserve the pain that came from my actions,
-especially from someone who is supposed to care for you.
-</p>
-
-</div>
-
-<div class="section">
-<h2>I Take Responsibility</h2>
-
-<p>
-I don't want to hide behind explanations or make my mistake sound smaller than it really is.
-</p>
-
-<p>
-What I did was wrong, and I take full responsibility for it.
-</p>
-
-<p>
-I know that apologies mean little without sincerity,
-and I want you to know that this apology comes from a place of deep regret.
-</p>
-
-</div>
-
-<div class="section">
-<h2>I Understand the Hurt</h2>
-
-<p>
-Pain like this is not just about a single moment.
-It affects trust, peace of mind, and the way someone feels inside.
-</p>
-
-<p>
-Knowing that I caused that pain in you is something I carry heavily in my heart.
-</p>
-
-</div>
-
-<div class="section">
-<h2>What I Learned</h2>
-
-<p>
-Love is not only about affection or words.
-</p>
-
-<p>
-It is about discipline, honesty,
-and protecting the heart of the person you care about.
-</p>
-
-<p>
-I failed in that, and I deeply regret it.
-</p>
-
-</div>
-
-<div class="section">
-<h2>My Intention</h2>
-
-<p>
-I am not asking you to ignore your feelings,
-and I am not asking you to rush forgiveness.
-</p>
-
-<p>
-I only want to be honest about my regret
-and show you that I recognize the weight of what I did.
-</p>
-
-<p>
-If there is ever a chance for me to rebuild what I broke,
-I know it will take patience, consistency,
-and real change from me.
-</p>
-
-<p class="signature">
-— Mark
-</p>
-
-</div>
-
-</div>
-
-<section class="lantern-scene">
-
-<div class="lantern-message">
-
-<h2>A Quiet Wish</h2>
-
-<p>
-Tonight, these lanterns rise into the sky carrying one quiet wish —
-that healing and peace find their way to your heart.
-</p>
-
-<p>
-I am deeply sorry for the pain I caused you.
-</p>
-
-<p>
-And if one day you allow it,
-I would sincerely work to rebuild the trust I broke.
-</p>
-
-</div>
-
-<canvas id="lanternCanvas"></canvas>
-
-</section>
-
-<div class="footer">
-Made with honesty.
-</div>
-
-<script>
-
-function scrollToContent(){
-document.getElementById("content").scrollIntoView({behavior:"smooth"});
-}
-
-const sections=document.querySelectorAll(".section");
-
-function reveal(){
-
-const trigger=window.innerHeight*0.85;
-
-sections.forEach(section=>{
-const top=section.getBoundingClientRect().top;
-
-if(top<trigger){
-section.classList.add("show");
-}
-});
-}
-
-window.addEventListener("scroll",reveal);
-window.addEventListener("load",reveal);
-
-/* Lantern Animation */
-
-const canvas=document.getElementById("lanternCanvas");
-const ctx=canvas.getContext("2d");
-
-canvas.width=window.innerWidth;
-canvas.height=window.innerHeight;
-
-let lanterns=[];
-
-class Lantern{
-
-constructor(){
-this.x=Math.random()*canvas.width;
-this.y=canvas.height+Math.random()*200;
-this.size=20+Math.random()*15;
-this.speed=0.3+Math.random()*0.5;
-this.glow=Math.random()*0.5+0.5;
-}
-
-draw(){
-ctx.beginPath();
-ctx.fillStyle=`rgba(255,180,80,${this.glow})`;
-ctx.shadowColor="orange";
-ctx.shadowBlur=20;
-ctx.fillRect(this.x,this.y,this.size*0.6,this.size);
-}
-
-update(){
-this.y-=this.speed;
-
-if(this.y<-50){
-this.y=canvas.height+50;
-this.x=Math.random()*canvas.width;
-}
-
-this.draw();
-}
-
-}
-
-for(let i=0;i<40;i++){
-lanterns.push(new Lantern());
-}
-
-function animate(){
-
-ctx.clearRect(0,0,canvas.width,canvas.height);
-
-lanterns.forEach(l=>{
-l.update();
-});
-
-requestAnimationFrame(animate);
-
-}
-
-animate();
-
-window.addEventListener("resize",()=>{
-canvas.width=window.innerWidth;
-canvas.height=window.innerHeight;
-});
-
-</script>
-
+  <!-- Envelope Intro -->
+  <div class="envelope-screen" id="intro">
+    <div class="envelope" onclick="openLetter()" id="envelope">
+      <div class="letter-peek"></div>
+      <div class="flap"></div>
+    </div>
+    <div class="envelope-text">
+      Tap the envelope to open the letter
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="container">
+    <div class="section">
+      <h1>To the Woman I Hurt</h1>
+      <p>This message is not meant to erase what I did.</p>
+      <p>It is here because I want to be honest about the pain I caused you and take responsibility for it.</p>
+    </div>
+
+    <div class="section">
+      <h2>I Am Truly Sorry</h2>
+      <p>I know that my actions hurt you deeply, and I want to say this clearly without excuses — I am truly sorry.</p>
+      <p>You did not deserve the pain that came from my actions, especially from someone who is supposed to care for you.</p>
+    </div>
+
+    <div class="section">
+      <h2>I Take Responsibility</h2>
+      <p>I will not hide behind explanations or try to make my mistake sound smaller than it really is.</p>
+      <p>What I did was wrong, and I take full responsibility for it.</p>
+      <p>I know that regret alone is not enough, but I still want to begin with honesty.</p>
+    </div>
+
+    <div class="section">
+      <h2>I Understand the Hurt</h2>
+      <p>Pain like this reaches deeper than a single moment. It affects trust, peace of mind, and the way a heart feels safe.</p>
+      <p>Knowing that I caused that pain in you is something I carry heavily and sincerely.</p>
+    </div>
+
+    <div class="section">
+      <h2>My Intention</h2>
+      <p>I am not asking you to rush forgiveness.</p>
+      <p>I only want to be honest about my regret and show that I understand the weight of what I did.</p>
+      <p>If there is ever a chance to rebuild what I broke, I know it would take patience, consistency, and real change from me.</p>
+      <p class="signature">— Mark</p>
+    </div>
+  </div>
+
+  <!-- Lantern Festival Ending -->
+  <section class="lantern-scene">
+    <div class="lantern-message">
+      <h2>A Quiet Wish</h2>
+      <p>Tonight, these lanterns rise into the sky carrying one quiet wish — that healing and peace find their way to your heart.</p>
+      <p>I am deeply sorry for the pain I caused you.</p>
+      <p>Click anywhere on the sky to release a lantern.</p>
+      <button class="wish-btn" onclick="releaseNamedLantern()">Release a Wish</button>
+    </div>
+    <canvas id="lanternCanvas"></canvas>
+  </section>
+
+  <div class="footer">
+    Made with honesty.
+  </div>
+
+  <script>
+    const herName = "Her Name";
+
+    /* Envelope */
+    function openLetter() {
+      const envelope = document.getElementById("envelope");
+      const intro = document.getElementById("intro");
+
+      envelope.classList.add("open");
+
+      setTimeout(() => {
+        intro.style.opacity = "0";
+        setTimeout(() => {
+          intro.style.display = "none";
+        }, 800);
+      }, 700);
+    }
+
+    /* Reveal sections */
+    const sections = document.querySelectorAll(".section");
+
+    function revealSections() {
+      const trigger = window.innerHeight * 0.85;
+
+      sections.forEach(section => {
+        const top = section.getBoundingClientRect().top;
+        if (top < trigger) {
+          section.classList.add("show");
+        }
+      });
+    }
+
+    window.addEventListener("scroll", revealSections);
+    window.addEventListener("load", revealSections);
+
+    /* Stars */
+    for (let i = 0; i < 100; i++) {
+      const star = document.createElement("div");
+      star.className = "star";
+      star.style.top = Math.random() * 100 + "%";
+      star.style.left = Math.random() * 100 + "%";
+      star.style.animationDuration = (2 + Math.random() * 3) + "s";
+      document.querySelector(".lantern-scene").appendChild(star);
+    }
+
+    /* Fireflies */
+    for (let i = 0; i < 18; i++) {
+      const firefly = document.createElement("div");
+      firefly.className = "firefly";
+      firefly.style.top = (55 + Math.random() * 40) + "%";
+      firefly.style.left = Math.random() * 100 + "%";
+      firefly.style.animationDuration = (4 + Math.random() * 4) + "s";
+      firefly.style.animationDelay = (Math.random() * 3) + "s";
+      document.querySelector(".lantern-scene").appendChild(firefly);
+    }
+
+    /* Canvas lanterns */
+    const canvas = document.getElementById("lanternCanvas");
+    const ctx = canvas.getContext("2d");
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = document.querySelector(".lantern-scene").offsetHeight;
+    }
+
+    resizeCanvas();
+    window.addEventListener("resize", resizeCanvas);
+
+    const lanterns = [];
+
+    class Lantern {
+      constructor(x = null, y = null, label = "", special = false) {
+        this.x = x !== null ? x : Math.random() * canvas.width;
+        this.y = y !== null ? y : canvas.height + Math.random() * 200;
+        this.width = special ? 18 : 14;
+        this.height = special ? 30 : 24;
+        this.speed = special ? 0.75 : 0.35 + Math.random() * 0.35;
+        this.drift = (Math.random() - 0.5) * 0.3;
+        this.glow = 0.7 + Math.random() * 0.3;
+        this.label = label;
+        this.special = special;
+        this.alpha = 1;
+      }
+
+      drawLanternBody() {
+        ctx.save();
+        ctx.shadowColor = this.special ? "rgba(255,220,140,0.95)" : "orange";
+        ctx.shadowBlur = this.special ? 28 : 18;
+
+        const bodyGradient = ctx.createLinearGradient(this.x, this.y, this.x, this.y + this.height);
+        bodyGradient.addColorStop(0, this.special ? "rgba(255, 230, 170, 0.98)" : "rgba(255, 205, 120, 0.95)");
+        bodyGradient.addColorStop(1, this.special ? "rgba(255, 165, 75, 0.98)" : "rgba(255, 145, 60, 0.95)");
+
+        ctx.fillStyle = bodyGradient;
+        ctx.globalAlpha = this.alpha;
+
+        ctx.beginPath();
+        ctx.roundRect(this.x - this.width / 2, this.y - this.height / 2, this.width, this.height, 4);
+        ctx.fill();
+
+        ctx.strokeStyle = "rgba(120, 70, 20, 0.45)";
+        ctx.lineWidth = 1;
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(this.x, this.y + this.height / 2);
+        ctx.lineTo(this.x, this.y + this.height / 2 + 10);
+        ctx.strokeStyle = "rgba(220,220,220,0.5)";
+        ctx.stroke();
+
+        ctx.restore();
+      }
+
+      drawLabel() {
+        if (!this.label) return;
+
+        ctx.save();
+        ctx.globalAlpha = this.alpha;
+        ctx.font = this.special ? "18px Georgia" : "14px Georgia";
+        ctx.textAlign = "center";
+        ctx.fillStyle = this.special ? "rgba(255,245,220,0.98)" : "rgba(255,255,255,0.9)";
+        ctx.shadowColor = "rgba(255,230,170,0.9)";
+        ctx.shadowBlur = this.special ? 14 : 8;
+        ctx.fillText(this.label, this.x, this.y - this.height);
+        ctx.restore();
+      }
+
+      update() {
+        this.y -= this.speed;
+        this.x += this.drift;
+
+        if (this.special && this.y < canvas.height * 0.22) {
+          this.alpha -= 0.004;
+        }
+
+        this.drawLanternBody();
+        this.drawLabel();
+      }
+
+      isOffScreen() {
+        return this.y < -80 || this.alpha <= 0;
+      }
+    }
+
+    function spawnLantern(x = null) {
+      lanterns.push(new Lantern(
+        x !== null ? x : Math.random() * canvas.width,
+        canvas.height + 20 + Math.random() * 60
+      ));
+    }
+
+    function releaseNamedLantern() {
+      lanterns.push(new Lantern(canvas.width / 2, canvas.height - 30, herName, true));
+    }
+
+    for (let i = 0; i < 28; i++) {
+      spawnLantern();
+    }
+
+    canvas.addEventListener("click", (e) => {
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      spawnLantern(x);
+    });
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for (let i = lanterns.length - 1; i >= 0; i--) {
+        lanterns[i].update();
+
+        if (lanterns[i].isOffScreen()) {
+          lanterns.splice(i, 1);
+        }
+      }
+
+      while (lanterns.length < 28) {
+        spawnLantern();
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  </script>
 </body>
 </html>
