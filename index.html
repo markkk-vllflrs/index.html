@@ -1,267 +1,379 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>For You</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: "Georgia", serif;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For You</title>
 
-    body {
-      background: linear-gradient(to bottom, #fdf6f7, #f8e9ec);
-      color: #4b2e2e;
-      line-height: 1.8;
-      overflow-x: hidden;
-    }
+<style>
 
-    .container {
-      max-width: 850px;
-      margin: auto;
-      padding: 50px 20px;
-    }
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family: Georgia, serif;
+}
 
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 40px 20px;
-    }
+body{
+background:linear-gradient(to bottom,#fdf6f7,#f7e6ea);
+color:#4b2e2e;
+line-height:1.7;
+overflow-x:hidden;
+}
 
-    .hero-content {
-      background: rgba(255, 255, 255, 0.75);
-      padding: 40px 30px;
-      border-radius: 24px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-      max-width: 750px;
-      animation: fadeIn 1.5s ease;
-    }
+.container{
+max-width:800px;
+margin:auto;
+padding:60px 20px;
+}
 
-    h1 {
-      font-size: 2.5rem;
-      margin-bottom: 20px;
-      color: #7b3f46;
-    }
+.hero{
+height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+padding:20px;
+}
 
-    h2 {
-      font-size: 1.7rem;
-      margin-bottom: 15px;
-      color: #8f4d56;
-    }
+.hero-box{
+background:rgba(255,255,255,0.8);
+padding:40px;
+border-radius:20px;
+box-shadow:0 10px 30px rgba(0,0,0,0.08);
+}
 
-    p {
-      font-size: 1.05rem;
-      margin-bottom: 15px;
-    }
+h1{
+font-size:2.5rem;
+margin-bottom:20px;
+color:#7b3f46;
+}
 
-    .btn {
-      display: inline-block;
-      margin-top: 20px;
-      padding: 12px 22px;
-      background: #a85d67;
-      color: white;
-      text-decoration: none;
-      border-radius: 999px;
-      transition: 0.3s ease;
-      cursor: pointer;
-      border: none;
-      font-size: 1rem;
-    }
+h2{
+font-size:1.6rem;
+margin-bottom:15px;
+color:#8f4d56;
+}
 
-    .btn:hover {
-      background: #8f4d56;
-      transform: translateY(-2px);
-    }
+p{
+margin-bottom:14px;
+}
 
-    .section {
-      background: rgba(255, 255, 255, 0.78);
-      margin: 30px 0;
-      padding: 30px;
-      border-radius: 22px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
-      opacity: 0;
-      transform: translateY(30px);
-      transition: all 0.9s ease;
-    }
+.btn{
+display:inline-block;
+margin-top:20px;
+padding:12px 25px;
+background:#a85d67;
+color:white;
+border:none;
+border-radius:999px;
+cursor:pointer;
+font-size:1rem;
+transition:.3s;
+}
 
-    .section.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
+.btn:hover{
+background:#8f4d56;
+transform:translateY(-2px);
+}
 
-    .signature {
-      margin-top: 25px;
-      font-style: italic;
-      font-size: 1.1rem;
-      color: #6d3c42;
-    }
+.section{
+background:rgba(255,255,255,0.85);
+padding:30px;
+border-radius:20px;
+margin-bottom:30px;
+box-shadow:0 6px 20px rgba(0,0,0,0.06);
+opacity:0;
+transform:translateY(40px);
+transition:1s;
+}
 
-    .footer {
-      text-align: center;
-      padding: 30px 20px 50px;
-      color: #7d5c60;
-      font-size: 0.95rem;
-    }
+.section.show{
+opacity:1;
+transform:translateY(0);
+}
 
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(25px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
+.signature{
+margin-top:20px;
+font-style:italic;
+}
 
-    @media (max-width: 600px) {
-      h1 {
-        font-size: 2rem;
-      }
+.footer{
+text-align:center;
+padding:40px;
+opacity:.7;
+}
 
-      h2 {
-        font-size: 1.4rem;
-      }
+/* Lantern Scene */
 
-      .hero-content,
-      .section {
-        padding: 24px 18px;
-      }
-    }
-  </style>
+.lantern-scene{
+position:relative;
+height:100vh;
+background:linear-gradient(to top,#050510,#0d0d2b,#1a1a40);
+overflow:hidden;
+display:flex;
+justify-content:center;
+align-items:center;
+text-align:center;
+color:white;
+}
+
+.lantern-message{
+position:absolute;
+z-index:2;
+max-width:600px;
+padding:30px;
+}
+
+.lantern-message h2{
+color:white;
+margin-bottom:15px;
+}
+
+#lanternCanvas{
+position:absolute;
+width:100%;
+height:100%;
+}
+
+</style>
 </head>
+
 <body>
-  <section class="hero">
-    <div class="hero-content">
-      <h1>To the Woman I Hurt</h1>
-      <p>
-        This website is not here to erase what I did.
-        It is here because I want to take full responsibility for the pain I caused you.
-      </p>
-      <button class="btn" onclick="scrollToContent()">Read My Heart</button>
-    </div>
-  </section>
 
-  <div class="container" id="content">
-    <div class="section">
-      <h2>I Am Sorry</h2>
-      <p>
-        I know that my actions hurt you deeply, and I want to say this clearly:
-        I am truly sorry.
-      </p>
-      <p>
-        Not just because things became difficult, and not just because I am afraid of losing you,
-        but because I know I caused pain to someone who means so much to me.
-      </p>
-      <p>
-        You did not deserve to be hurt by me.
-      </p>
-    </div>
+<section class="hero">
+<div class="hero-box">
 
-    <div class="section">
-      <h2>I Take Responsibility</h2>
-      <p>
-        I do not want to hide behind excuses or make my mistake sound smaller than it really is.
-      </p>
-      <p>
-        What I did was wrong. I understand that apologies mean little if they are not honest,
-        and honesty means admitting fully that I failed you in a way that cut deep.
-      </p>
-      <p>
-        I own that. Completely.
-      </p>
-    </div>
+<h1>To the Woman I Hurt</h1>
 
-    <div class="section">
-      <h2>I Understand Your Pain</h2>
-      <p>
-        I know that pain like this is not just about one moment. It can affect trust, peace of mind,
-        and the way you look at everything that came before it.
-      </p>
-      <p>
-        I understand that what happened may have made you feel disappointed, disrespected, confused,
-        or emotionally tired. And knowing that I caused those feelings in you breaks me.
-      </p>
-    </div>
+<p>
+This website is not here to erase what I did.
+</p>
 
-    <div class="section">
-      <h2>What I Am Learning</h2>
-      <p>
-        I am learning that love is not only about affection, words, or good intentions.
-        It is also about discipline, honesty, and protecting the heart of the person you love.
-      </p>
-      <p>
-        I failed in that, and I do not want to stay the same person who caused you this pain.
-      </p>
-    </div>
+<p>
+It is here because I want to be honest about the pain I caused you
+and take responsibility for it.
+</p>
 
-    <div class="section">
-      <h2>What I Want You to Know</h2>
-      <p>
-        I am not asking you to ignore your pain.
-        I am not asking you to forgive me right away.
-        I am not asking you to pretend everything is okay.
-      </p>
-      <p>
-        I only want to be truthful with you and let you know that I see the weight of what I did.
-      </p>
-      <p>
-        And if there is ever any chance for me to rebuild what I broke,
-        I know it has to be through change, consistency, and patience.
-      </p>
-    </div>
+<button class="btn" onclick="scrollToContent()">Read My Heart</button>
 
-    <div class="section">
-      <h2>No Pressure, Only Honesty</h2>
-      <p>
-        Whatever you feel right now is valid.
-        Whatever time you need is valid.
-      </p>
-      <p>
-        This message is not meant to pressure you.
-        It is simply my heart trying to be accountable,
-        because you deserve truth, respect, and sincerity from me.
-      </p>
-      <p class="signature">
-        With remorse and love,<br />
-        Mark
-      </p>
-    </div>
-  </div>
+</div>
+</section>
 
-  <div class="footer">
-    Made with sincerity, not excuses.
-  </div>
+<div class="container" id="content">
 
-  <script>
-    function scrollToContent() {
-      document.getElementById("content").scrollIntoView({
-        behavior: "smooth"
-      });
-    }
+<div class="section">
+<h2>I Am Truly Sorry</h2>
 
-    const sections = document.querySelectorAll(".section");
+<p>
+I know that my actions hurt you deeply,
+and I want to say this clearly without excuses —
+I am truly sorry.
+</p>
 
-    const revealSections = () => {
-      const triggerBottom = window.innerHeight * 0.88;
+<p>
+You did not deserve the pain that came from my actions,
+especially from someone who is supposed to care for you.
+</p>
 
-      sections.forEach(section => {
-        const sectionTop = section.getBoundingClientRect().top;
+</div>
 
-        if (sectionTop < triggerBottom) {
-          section.classList.add("show");
-        }
-      });
-    };
+<div class="section">
+<h2>I Take Responsibility</h2>
 
-    window.addEventListener("scroll", revealSections);
-    window.addEventListener("load", revealSections);
-  </script>
+<p>
+I don't want to hide behind explanations or make my mistake sound smaller than it really is.
+</p>
+
+<p>
+What I did was wrong, and I take full responsibility for it.
+</p>
+
+<p>
+I know that apologies mean little without sincerity,
+and I want you to know that this apology comes from a place of deep regret.
+</p>
+
+</div>
+
+<div class="section">
+<h2>I Understand the Hurt</h2>
+
+<p>
+Pain like this is not just about a single moment.
+It affects trust, peace of mind, and the way someone feels inside.
+</p>
+
+<p>
+Knowing that I caused that pain in you is something I carry heavily in my heart.
+</p>
+
+</div>
+
+<div class="section">
+<h2>What I Learned</h2>
+
+<p>
+Love is not only about affection or words.
+</p>
+
+<p>
+It is about discipline, honesty,
+and protecting the heart of the person you care about.
+</p>
+
+<p>
+I failed in that, and I deeply regret it.
+</p>
+
+</div>
+
+<div class="section">
+<h2>My Intention</h2>
+
+<p>
+I am not asking you to ignore your feelings,
+and I am not asking you to rush forgiveness.
+</p>
+
+<p>
+I only want to be honest about my regret
+and show you that I recognize the weight of what I did.
+</p>
+
+<p>
+If there is ever a chance for me to rebuild what I broke,
+I know it will take patience, consistency,
+and real change from me.
+</p>
+
+<p class="signature">
+— Mark
+</p>
+
+</div>
+
+</div>
+
+<section class="lantern-scene">
+
+<div class="lantern-message">
+
+<h2>A Quiet Wish</h2>
+
+<p>
+Tonight, these lanterns rise into the sky carrying one quiet wish —
+that healing and peace find their way to your heart.
+</p>
+
+<p>
+I am deeply sorry for the pain I caused you.
+</p>
+
+<p>
+And if one day you allow it,
+I would sincerely work to rebuild the trust I broke.
+</p>
+
+</div>
+
+<canvas id="lanternCanvas"></canvas>
+
+</section>
+
+<div class="footer">
+Made with honesty.
+</div>
+
+<script>
+
+function scrollToContent(){
+document.getElementById("content").scrollIntoView({behavior:"smooth"});
+}
+
+const sections=document.querySelectorAll(".section");
+
+function reveal(){
+
+const trigger=window.innerHeight*0.85;
+
+sections.forEach(section=>{
+const top=section.getBoundingClientRect().top;
+
+if(top<trigger){
+section.classList.add("show");
+}
+});
+}
+
+window.addEventListener("scroll",reveal);
+window.addEventListener("load",reveal);
+
+/* Lantern Animation */
+
+const canvas=document.getElementById("lanternCanvas");
+const ctx=canvas.getContext("2d");
+
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+let lanterns=[];
+
+class Lantern{
+
+constructor(){
+this.x=Math.random()*canvas.width;
+this.y=canvas.height+Math.random()*200;
+this.size=20+Math.random()*15;
+this.speed=0.3+Math.random()*0.5;
+this.glow=Math.random()*0.5+0.5;
+}
+
+draw(){
+ctx.beginPath();
+ctx.fillStyle=`rgba(255,180,80,${this.glow})`;
+ctx.shadowColor="orange";
+ctx.shadowBlur=20;
+ctx.fillRect(this.x,this.y,this.size*0.6,this.size);
+}
+
+update(){
+this.y-=this.speed;
+
+if(this.y<-50){
+this.y=canvas.height+50;
+this.x=Math.random()*canvas.width;
+}
+
+this.draw();
+}
+
+}
+
+for(let i=0;i<40;i++){
+lanterns.push(new Lantern());
+}
+
+function animate(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height);
+
+lanterns.forEach(l=>{
+l.update();
+});
+
+requestAnimationFrame(animate);
+
+}
+
+animate();
+
+window.addEventListener("resize",()=>{
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+});
+
+</script>
+
 </body>
 </html>
