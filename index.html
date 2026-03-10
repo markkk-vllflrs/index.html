@@ -22,7 +22,6 @@
       overflow-x: hidden;
     }
 
-    /* Envelope Intro */
     .envelope-screen {
       position: fixed;
       inset: 0;
@@ -98,7 +97,6 @@
       padding: 0 20px;
     }
 
-    /* Main content */
     .container {
       max-width: 850px;
       margin: auto;
@@ -146,7 +144,6 @@
       font-style: italic;
     }
 
-    /* Lantern Scene */
     .lantern-scene {
       position: relative;
       min-height: 100vh;
@@ -205,7 +202,6 @@
       cursor: pointer;
     }
 
-    /* Stars */
     .star {
       position: absolute;
       width: 2px;
@@ -222,7 +218,6 @@
       to { opacity: 1; transform: scale(1.2); }
     }
 
-    /* Fireflies */
     .firefly {
       position: absolute;
       width: 6px;
@@ -273,8 +268,6 @@
   </style>
 </head>
 <body>
-
-  <!-- Envelope Intro -->
   <div class="envelope-screen" id="intro">
     <div class="envelope" onclick="openLetter()" id="envelope">
       <div class="letter-peek"></div>
@@ -285,7 +278,6 @@
     </div>
   </div>
 
-  <!-- Main Content -->
   <div class="container">
     <div class="section">
       <h1>To the Woman I Hurt</h1>
@@ -321,7 +313,6 @@
     </div>
   </div>
 
-  <!-- Lantern Festival Ending -->
   <section class="lantern-scene">
     <div class="lantern-message">
       <h2>A Quiet Wish</h2>
@@ -340,7 +331,6 @@
   <script>
     const herName = "Her Name";
 
-    /* Envelope */
     function openLetter() {
       const envelope = document.getElementById("envelope");
       const intro = document.getElementById("intro");
@@ -355,7 +345,6 @@
       }, 700);
     }
 
-    /* Reveal sections */
     const sections = document.querySelectorAll(".section");
 
     function revealSections() {
@@ -372,7 +361,6 @@
     window.addEventListener("scroll", revealSections);
     window.addEventListener("load", revealSections);
 
-    /* Stars */
     for (let i = 0; i < 100; i++) {
       const star = document.createElement("div");
       star.className = "star";
@@ -382,7 +370,6 @@
       document.querySelector(".lantern-scene").appendChild(star);
     }
 
-    /* Fireflies */
     for (let i = 0; i < 18; i++) {
       const firefly = document.createElement("div");
       firefly.className = "firefly";
@@ -393,7 +380,6 @@
       document.querySelector(".lantern-scene").appendChild(firefly);
     }
 
-    /* Canvas lanterns */
     const canvas = document.getElementById("lanternCanvas");
     const ctx = canvas.getContext("2d");
 
