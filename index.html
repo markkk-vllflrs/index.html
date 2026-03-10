@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- Clean rebuild: stable intro, page navigation, typewriter sections, and lantern ending -->
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -23,106 +24,104 @@
       overflow: hidden;
     }
 
-    .envelope-screen {
-      position: fixed;
-      inset: 0;
-      background: linear-gradient(to bottom, #f8e7eb, #f4dce2);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      z-index: 9999;
-      transition: opacity 0.8s ease;
-      padding: 24px;
+    button {
+      border: none;
+      cursor: pointer;
     }
 
-    .envelope {
-      width: 240px;
-      height: 150px;
-      background: #fff8fa;
+    .intro-overlay {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(to bottom, #f8e7eb, #f4dce2);
+      z-index: 20;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+      padding: 20px;
+    }
+
+    .intro-overlay.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .intro-card {
+      width: min(360px, 100%);
+      background: rgba(255, 248, 250, 0.92);
+      border-radius: 24px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
+      padding: 28px 22px;
+      text-align: center;
+    }
+
+    .intro-envelope {
+      width: 150px;
+      height: 100px;
+      margin: 0 auto 18px;
       position: relative;
-      border-radius: 8px;
-      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.12);
-      cursor: pointer;
+      background: #fffafa;
+      border-radius: 10px;
+      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.08);
       overflow: hidden;
     }
 
-    .envelope::before {
+    .intro-envelope::before {
       content: "";
       position: absolute;
       inset: 0;
-      background: linear-gradient(to bottom, #fffdfd, #f6e9ec);
-      z-index: 1;
-    }
-
-    .flap {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: #e8c8cd;
       clip-path: polygon(0 0, 100% 0, 50% 62%);
-      transform-origin: top;
-      transition: transform 0.9s ease;
-      z-index: 3;
+      background: #e5c7cd;
     }
 
-    .letter-peek {
-      position: absolute;
-      left: 50%;
-      bottom: 18px;
-      transform: translateX(-50%);
-      width: 180px;
-      height: 90px;
-      background: #ffffff;
-      border-radius: 6px;
-      z-index: 2;
-      transition: transform 0.8s ease;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    .intro-title {
+      font-size: 1.5rem;
+      color: #7b3f46;
+      margin-bottom: 10px;
     }
 
-    .open .flap {
-      transform: rotateX(180deg);
-    }
-
-    .open .letter-peek {
-      transform: translateX(-50%) translateY(-28px);
-    }
-
-    .envelope-text {
-      margin-top: 22px;
-      color: #7b5560;
-      opacity: 0.9;
+    .intro-text {
+      color: #7f5d65;
+      line-height: 1.7;
+      margin-bottom: 18px;
       font-size: 1rem;
-      text-align: center;
-      padding: 0 20px;
-      max-width: 320px;
-      line-height: 1.6;
     }
 
-    .music-btn,
-    .nav-btn,
-    .wish-btn {
-      border: none;
+    .intro-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .primary-btn,
+    .secondary-btn,
+    .wish-btn,
+    .nav-btn {
       border-radius: 999px;
-      cursor: pointer;
-      transition: transform 0.25s ease, box-shadow 0.25s ease, opacity 0.25s ease;
+      padding: 12px 22px;
+      font-size: 0.98rem;
+      transition: transform 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease;
     }
 
-    .music-btn {
-      margin-top: 16px;
-      padding: 11px 18px;
+    .primary-btn:hover,
+    .secondary-btn:hover,
+    .wish-btn:hover,
+    .nav-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .primary-btn,
+    .nav-btn {
       background: #a85d67;
       color: white;
-      font-size: 0.95rem;
       box-shadow: 0 8px 18px rgba(168, 93, 103, 0.22);
     }
 
-    .music-btn:hover,
-    .nav-btn:hover,
-    .wish-btn:hover {
-      transform: translateY(-2px);
+    .secondary-btn {
+      background: #efdfe3;
+      color: #7b3f46;
     }
 
     .site-shell {
@@ -138,9 +137,9 @@
       width: min(920px, 100%);
       min-height: min(700px, calc(100vh - 36px));
       max-height: calc(100vh - 36px);
-      background: rgba(255, 255, 255, 0.86);
+      background: rgba(255, 255, 255, 0.88);
       border-radius: 28px;
-      box-shadow: 0 16px 42px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 18px 44px rgba(0, 0, 0, 0.08);
       display: none;
       position: relative;
       overflow: hidden;
@@ -149,13 +148,13 @@
     .page.active {
       display: flex;
       flex-direction: column;
-      animation: pageFade 0.7s ease;
+      animation: fadePage 0.6s ease;
     }
 
-    @keyframes pageFade {
+    @keyframes fadePage {
       from {
         opacity: 0;
-        transform: translateY(16px);
+        transform: translateY(14px);
       }
       to {
         opacity: 1;
@@ -172,52 +171,51 @@
       overflow: auto;
     }
 
-    .page-body.centered {
-      text-align: center;
+    .page-body.center {
       align-items: center;
+      text-align: center;
     }
 
     .page-number {
-      font-size: 0.95rem;
       color: #97707a;
       margin-bottom: 14px;
+      font-size: 0.95rem;
       letter-spacing: 0.04em;
     }
 
     h1 {
-      font-size: 2.6rem;
-      margin-bottom: 18px;
+      font-size: 2.55rem;
       color: #7b3f46;
-      line-height: 1.25;
+      margin-bottom: 18px;
+      line-height: 1.24;
     }
 
     h2 {
       font-size: 1.75rem;
-      margin-bottom: 16px;
       color: #8f4d56;
-      line-height: 1.3;
+      margin-bottom: 16px;
+      line-height: 1.28;
     }
 
     p {
+      font-size: 1.05rem;
       line-height: 1.9;
       margin-bottom: 14px;
-      font-size: 1.05rem;
-    }
-
-    .signature {
-      margin-top: 20px;
-      font-style: italic;
     }
 
     .typewriter {
-      min-height: 170px;
+      min-height: 200px;
       white-space: pre-wrap;
-      width: 100%;
+    }
+
+    .signature {
+      margin-top: 12px;
+      font-style: italic;
     }
 
     .gallery-note {
-      opacity: 0.78;
       font-size: 0.95rem;
+      opacity: 0.78;
       margin-bottom: 18px;
     }
 
@@ -225,51 +223,47 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 14px;
-      width: 100%;
     }
 
     .gallery-card {
-      background: rgba(255,255,255,0.88);
+      background: rgba(255,255,255,0.95);
       border-radius: 18px;
       overflow: hidden;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.06);
     }
 
     .gallery-card img {
-      display: block;
       width: 100%;
       height: 220px;
       object-fit: cover;
+      display: block;
       background: #f1dfe3;
     }
 
     .gallery-caption {
       padding: 12px 14px;
-      font-size: 0.95rem;
       color: #6b454d;
+      font-size: 0.95rem;
       line-height: 1.6;
     }
 
     .page-footer {
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
       gap: 12px;
       padding: 18px 26px 24px;
+      background: rgba(255, 248, 250, 0.8);
       border-top: 1px solid rgba(123, 63, 70, 0.08);
-      background: rgba(255, 248, 250, 0.7);
     }
 
     .page-footer.center {
       justify-content: center;
     }
 
-    .nav-btn {
-      padding: 12px 22px;
-      background: #a85d67;
-      color: white;
-      font-size: 0.98rem;
-      box-shadow: 0 8px 18px rgba(168, 93, 103, 0.18);
+    .page-indicator {
+      color: #8d6670;
+      font-size: 0.95rem;
     }
 
     .nav-btn.secondary {
@@ -278,24 +272,26 @@
       box-shadow: none;
     }
 
-    .nav-btn:disabled {
-      opacity: 0.45;
-      cursor: not-allowed;
-      transform: none;
-      box-shadow: none;
-    }
-
-    .page-indicator {
-      font-size: 0.95rem;
-      color: #8d6670;
-    }
-
     .lantern-page {
       background:
         radial-gradient(circle at 50% 18%, rgba(255,255,255,0.08), transparent 22%),
         radial-gradient(circle at 78% 16%, rgba(255, 239, 188, 0.18), transparent 10%),
         linear-gradient(to top, #02020a, #0b0b2b, #161640);
       color: white;
+    }
+
+    .lantern-page::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 76%, rgba(255, 176, 82, 0.08), transparent 28%);
+      z-index: 0;
+      animation: cinematicGlow 5s ease-in-out infinite alternate;
+    }
+
+    @keyframes cinematicGlow {
+      from { opacity: 0.45; transform: scale(1); }
+      to { opacity: 0.85; transform: scale(1.08); }
     }
 
     .moon {
@@ -311,45 +307,20 @@
       opacity: 0.9;
     }
 
-    .lantern-content {
-      position: relative;
-      z-index: 3;
-      text-align: center;
-      max-width: 670px;
-      margin: 0 auto;
-      color: white;
-    }
-
-    .lantern-content h2 {
-      color: white;
-      font-size: 2rem;
-    }
-
-    .lantern-content p {
-      color: rgba(255,255,255,0.92);
-    }
-
-    .wish-btn {
-      margin-top: 16px;
-      padding: 12px 24px;
-      background: rgba(255, 193, 94, 0.95);
-      color: #3f2508;
-      font-size: 1rem;
-      box-shadow: 0 8px 18px rgba(255, 193, 94, 0.22);
-    }
-
-    .final-message {
-      margin-top: 22px;
+    .sky-glow {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
       opacity: 0;
-      transform: translateY(16px);
-      transition: opacity 1s ease, transform 1s ease;
-      font-size: 1rem;
-      color: rgba(255, 247, 220, 0.98);
+      background:
+        radial-gradient(circle at 50% 46%, rgba(255, 211, 128, 0.24), transparent 16%),
+        radial-gradient(circle at 48% 52%, rgba(255, 174, 92, 0.18), transparent 24%);
+      transition: opacity 1.4s ease;
     }
 
-    .final-message.show {
+    .sky-glow.show {
       opacity: 1;
-      transform: translateY(0);
     }
 
     #lanternCanvas {
@@ -359,6 +330,51 @@
       height: 100%;
       z-index: 1;
       cursor: pointer;
+    }
+
+    .lantern-content {
+      position: relative;
+      z-index: 3;
+      max-width: 680px;
+      margin: 0 auto;
+      text-align: center;
+      backdrop-filter: blur(2px);
+      animation: cinematicFloat 4s ease-in-out infinite alternate;
+    }
+
+    @keyframes cinematicFloat {
+      from { transform: translateY(0px); }
+      to { transform: translateY(-10px); }
+    }
+
+    .lantern-content h2 {
+      color: white;
+      font-size: 2rem;
+    }
+
+    .lantern-content p {
+      color: rgba(255,255,255,0.93);
+    }
+
+    .wish-btn {
+      background: rgba(255, 193, 94, 0.95);
+      color: #3f2508;
+      box-shadow: 0 8px 18px rgba(255, 193, 94, 0.22);
+      margin-top: 12px;
+    }
+
+    .final-message {
+      margin-top: 22px;
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+      color: rgba(255, 247, 220, 0.98);
+      font-size: 1rem;
+    }
+
+    .final-message.show {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .star {
@@ -396,30 +412,16 @@
     }
 
     @media (max-width: 820px) {
-      .gallery-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-
       .page-body {
         padding: 42px 28px 22px;
+      }
+
+      .gallery-grid {
+        grid-template-columns: 1fr 1fr;
       }
     }
 
     @media (max-width: 640px) {
-      body {
-        -webkit-text-size-adjust: 100%;
-      }
-
-      .envelope {
-        width: 210px;
-        height: 132px;
-      }
-
-      .letter-peek {
-        width: 155px;
-        height: 78px;
-      }
-
       .site-shell {
         padding: 10px;
       }
@@ -439,7 +441,7 @@
       }
 
       h2 {
-        font-size: 1.4rem;
+        font-size: 1.38rem;
       }
 
       p {
@@ -448,7 +450,7 @@
       }
 
       .typewriter {
-        min-height: 220px;
+        min-height: 230px;
       }
 
       .gallery-grid {
@@ -464,22 +466,17 @@
         flex-wrap: wrap;
       }
 
-      .page-footer.center {
-        flex-wrap: nowrap;
-      }
-
-      .nav-btn,
-      .wish-btn,
-      .music-btn {
-        width: 100%;
-        font-size: 0.98rem;
-        padding: 13px 18px;
-      }
-
       .page-indicator {
         width: 100%;
         text-align: center;
         order: -1;
+      }
+
+      .primary-btn,
+      .secondary-btn,
+      .wish-btn,
+      .nav-btn {
+        width: 100%;
       }
 
       .moon {
@@ -495,27 +492,28 @@
     <source src="music.mp3" type="audio/mpeg" />
   </audio>
 
-  <div class="envelope-screen" id="intro">
-    <div class="envelope" onclick="openLetter()" id="envelope">
-      <div class="letter-peek"></div>
-      <div class="flap"></div>
+  <div class="intro-overlay" id="introOverlay">
+    <div class="intro-card">
+      <div class="intro-envelope"></div>
+      <div class="intro-title">For You</div>
+      <div class="intro-text">Press the button below to start reading. You can play the music first if you want.</div>
+      <div class="intro-actions">
+        <button class="secondary-btn" id="playMusicBtn" type="button">Play Music</button>
+        <button class="primary-btn" id="openLetterBtn" type="button">Open Letter</button>
+      </div>
     </div>
-    <div class="envelope-text">
-      Tap the envelope to open the letter, then play the music when you are ready.
-    </div>
-    <button class="music-btn" onclick="playMusic()">Play Music</button>
   </div>
 
-  <div class="site-shell" id="siteShell">
+  <div class="site-shell">
     <section class="page active" data-page="1">
-      <div class="page-body centered">
+      <div class="page-body center">
         <div class="page-number">Page 1</div>
         <h1>To the Woman I Hurt</h1>
         <p>This message is not meant to erase what I did.</p>
         <p>It is here because I want to be honest about the pain I caused you and take responsibility for it.</p>
       </div>
       <div class="page-footer center">
-        <button class="nav-btn" onclick="nextPage()">Open the Next Page</button>
+        <button class="nav-btn" data-next>Open the Next Page</button>
       </div>
     </section>
 
@@ -523,12 +521,12 @@
       <div class="page-body">
         <div class="page-number">Page 2</div>
         <h2>I Am Truly Sorry</h2>
-        <div class="typewriter" id="typewriterText"></div>
+        <div class="typewriter" id="typewriter-2"></div>
       </div>
       <div class="page-footer">
-        <button class="nav-btn secondary" onclick="prevPage()">Previous</button>
-        <div class="page-indicator">2 / 6</div>
-        <button class="nav-btn" onclick="nextPage()">Next</button>
+        <button class="nav-btn secondary" data-prev>Previous</button>
+        <div class="page-indicator">2 / 7</div>
+        <button class="nav-btn" data-next>Next</button>
       </div>
     </section>
 
@@ -536,14 +534,12 @@
       <div class="page-body">
         <div class="page-number">Page 3</div>
         <h2>I Take Responsibility</h2>
-        <p>I will not hide behind explanations or try to make my mistake sound smaller than it really is.</p>
-        <p>What I did was wrong, and I take full accountability for it.</p>
-        <p>I know that regret alone is not enough, but I still want to begin with honesty.</p>
+        <div class="typewriter" id="typewriter-3"></div>
       </div>
       <div class="page-footer">
-        <button class="nav-btn secondary" onclick="prevPage()">Previous</button>
-        <div class="page-indicator">3 / 6</div>
-        <button class="nav-btn" onclick="nextPage()">Next</button>
+        <button class="nav-btn secondary" data-prev>Previous</button>
+        <div class="page-indicator">3 / 7</div>
+        <button class="nav-btn" data-next>Next</button>
       </div>
     </section>
 
@@ -551,13 +547,12 @@
       <div class="page-body">
         <div class="page-number">Page 4</div>
         <h2>I Understand the Hurt</h2>
-        <p>Pain like this reaches deeper than a single moment. It affects trust, peace of mind, and the way a heart feels safe.</p>
-        <p>Knowing that I caused that pain in you is something I carry heavily and sincerely.</p>
+        <div class="typewriter" id="typewriter-4"></div>
       </div>
       <div class="page-footer">
-        <button class="nav-btn secondary" onclick="prevPage()">Previous</button>
-        <div class="page-indicator">4 / 6</div>
-        <button class="nav-btn" onclick="nextPage()">Next</button>
+        <button class="nav-btn secondary" data-prev>Previous</button>
+        <div class="page-indicator">4 / 7</div>
+        <button class="nav-btn" data-next>Next</button>
       </div>
     </section>
 
@@ -565,7 +560,7 @@
       <div class="page-body">
         <div class="page-number">Page 5</div>
         <h2>Our Little Moments</h2>
-        <p class="gallery-note">You can replace these placeholders with your own photos later.</p>
+        <p class="gallery-note">Replace these with your real photos later.</p>
         <div class="gallery-grid">
           <div class="gallery-card">
             <img src="https://placehold.co/800x1000/f1dfe3/7b3f46?text=Photo+1" alt="Memory 1" />
@@ -582,9 +577,9 @@
         </div>
       </div>
       <div class="page-footer">
-        <button class="nav-btn secondary" onclick="prevPage()">Previous</button>
-        <div class="page-indicator">5 / 6</div>
-        <button class="nav-btn" onclick="nextPage()">Next</button>
+        <button class="nav-btn secondary" data-prev>Previous</button>
+        <div class="page-indicator">5 / 7</div>
+        <button class="nav-btn" data-next>Next</button>
       </div>
     </section>
 
@@ -592,195 +587,225 @@
       <div class="page-body">
         <div class="page-number">Page 6</div>
         <h2>My Intention</h2>
-        <p>I am not asking you to rush forgiveness.</p>
-        <p>I only want to be honest about my regret and show that I understand the weight of what I did.</p>
-        <p>If there is ever a chance to rebuild what I broke, I know it would take patience, consistency, and real change from me.</p>
+        <div class="typewriter" id="typewriter-6"></div>
         <p class="signature">With love and sincerity,<br />Mark</p>
       </div>
       <div class="page-footer">
-        <button class="nav-btn secondary" onclick="prevPage()">Previous</button>
+        <button class="nav-btn secondary" data-prev>Previous</button>
         <div class="page-indicator">6 / 7</div>
-        <button class="nav-btn" onclick="nextPage()">Go to the Night Sky</button>
+        <button class="nav-btn" data-next>Go to the Night Sky</button>
       </div>
     </section>
 
     <section class="page lantern-page" data-page="7">
       <div class="moon"></div>
+      <div class="sky-glow" id="skyGlow"></div>
       <canvas id="lanternCanvas"></canvas>
-      <div class="page-body">
+      <div class="page-body center">
         <div class="lantern-content">
           <div class="page-number" style="color: rgba(255,255,255,0.72);">Final Page</div>
           <h2>A Quiet Wish</h2>
           <p>Tonight, these lanterns rise into the sky carrying one quiet wish — that healing and peace find their way to your heart.</p>
           <p>I am deeply sorry for the pain I caused you.</p>
-          <p>Click anywhere on the sky to release a lantern.</p>
-          <button class="wish-btn" onclick="releaseNamedLantern()">Release a Wish</button>
+          <p>Click anywhere on the sky to release a lantern, or press the button below.</p>
+          <button class="wish-btn" id="releaseWishBtn" type="button">Release a Wish</button>
           <div class="final-message" id="finalMessage">You are worth every effort, every change, and every promise I will keep.</div>
         </div>
       </div>
       <div class="page-footer">
-        <button class="nav-btn secondary" onclick="prevPage()">Previous</button>
-        <div class="page-indicator" style="color: rgba(255,255,255,0.75);">7 / 7</div>
-        <button class="nav-btn" onclick="goToFirstPage()">Read Again</button>
+        <button class="nav-btn secondary" data-prev>Previous</button>
+        <div class="page-indicator" style="color: rgba(255,255,255,0.76);">7 / 7</div>
+        <button class="nav-btn" id="restartBtn" type="button">Read Again</button>
       </div>
     </section>
   </div>
 
   <script>
-    const herName = "Her Name";
-    const typewriterMessage = `I know that my actions hurt you deeply, and I want to say this clearly without excuses — I am truly sorry.
+    const typewriterMessages = {
+      2: `I know that my actions hurt you deeply, and I want to say this clearly without excuses — I am truly sorry.\n\nYou did not deserve the pain that came from my actions, especially from someone who is supposed to care for you.`,
+      3: `I will not hide behind explanations or try to make my mistake sound smaller than it really is.\n\nWhat I did was wrong, and I take full responsibility for it.\n\nI know that regret alone is not enough, but I still want to begin with honesty.`,
+      4: `Pain like this reaches deeper than a single moment. It affects trust, peace of mind, and the way a heart feels safe.\n\nKnowing that I caused that pain in you is something I carry heavily and sincerely.`,
+      6: `I am not asking you to rush forgiveness.\n\nI only want to be honest about my regret and show that I understand the weight of what I did.\n\nIf there is ever a chance to rebuild what I broke, I know it would take patience, consistency, and real change from me.`
+    };
 
-You did not deserve the pain that came from my actions, especially from someone who is supposed to care for you.`;
-    let typewriterStarted = false;
-    let currentPage = 0;
-    const pages = document.querySelectorAll('.page');
+    const skyMessage = "I'm sorry hun :((";
+    const pages = Array.from(document.querySelectorAll('.page'));
+    const introOverlay = document.getElementById('introOverlay');
+    const playMusicBtn = document.getElementById('playMusicBtn');
+    const openLetterBtn = document.getElementById('openLetterBtn');
+    const releaseWishBtn = document.getElementById('releaseWishBtn');
+    const restartBtn = document.getElementById('restartBtn');
+    const bgMusic = document.getElementById('bgMusic');
+    const finalMessage = document.getElementById('finalMessage');
+    const skyGlow = document.getElementById('skyGlow');
+    const typedPages = new Set();
+    const releasedMessages = new Set();
+    let currentPageIndex = 0;
+    let introClosed = false;
+    let lanternMusicBoosted = false;
 
     function playMusic() {
-      const audio = document.getElementById('bgMusic');
-      audio.play().catch(() => {});
+      if (!bgMusic) return;
+      bgMusic.volume = 0.45;
+      bgMusic.play().catch(() => {});
+    }
+
+    function fadeMusicForLanternPage() {
+      if (lanternMusicBoosted || !bgMusic) return;
+      lanternMusicBoosted = true;
+      bgMusic.play().catch(() => {});
+      bgMusic.volume = 0.08;
+      let volume = 0.08;
+      const interval = setInterval(() => {
+        volume += 0.04;
+        if (volume >= 0.5) {
+          bgMusic.volume = 0.5;
+          clearInterval(interval);
+        } else {
+          bgMusic.volume = volume;
+        }
+      }, 180);
     }
 
     function openLetter() {
-      const envelope = document.getElementById('envelope');
-      const intro = document.getElementById('intro');
+      if (introClosed) return;
+      introClosed = true;
+      introOverlay.classList.add('hidden');
+      playMusic();
+    }
 
-      envelope.classList.add('open');
-
-      setTimeout(() => {
-        intro.style.opacity = '0';
-        setTimeout(() => {
-          intro.style.display = 'none';
-          playMusic();
-        }, 800);
-      }, 700);
+    function typeText(element, text, speed) {
+      if (!element) return;
+      element.textContent = '';
+      let i = 0;
+      function step() {
+        if (i < text.length) {
+          element.textContent += text.charAt(i);
+          i += 1;
+          setTimeout(step, speed);
+        }
+      }
+      step();
     }
 
     function showPage(index) {
-      pages.forEach((page, i) => {
-        page.classList.toggle('active', i === index);
-      });
-      currentPage = index;
+      if (index < 0 || index >= pages.length) return;
+      pages.forEach((page, i) => page.classList.toggle('active', i === index));
+      currentPageIndex = index;
 
-      if (currentPage === 1 && !typewriterStarted) {
-        typewriterStarted = true;
-        const typewriterBox = document.getElementById('typewriterText');
-        typewriterBox.textContent = '';
-        startTypewriter(typewriterMessage, typewriterBox, 28);
+      const pageNumber = index + 1;
+      if (typewriterMessages[pageNumber] && !typedPages.has(pageNumber)) {
+        typedPages.add(pageNumber);
+        const target = document.getElementById(`typewriter-${pageNumber}`);
+        typeText(target, typewriterMessages[pageNumber], 28);
+      }
+
+      if (pageNumber === 7) {
+        fadeMusicForLanternPage();
+        resizeCanvas();
       }
     }
 
     function nextPage() {
-      if (currentPage < pages.length - 1) {
-        showPage(currentPage + 1);
-      }
+      showPage(currentPageIndex + 1);
     }
 
     function prevPage() {
-      if (currentPage > 0) {
-        showPage(currentPage - 1);
-      }
+      showPage(currentPageIndex - 1);
     }
 
-    function goToFirstPage() {
+    function restartStory() {
       showPage(0);
     }
 
-    function startTypewriter(text, element, speed) {
-      let index = 0;
-      function type() {
-        if (index < text.length) {
-          element.textContent += text.charAt(index);
-          index++;
-          setTimeout(type, speed);
-        }
-      }
-      type();
-    }
+    if (playMusicBtn) playMusicBtn.addEventListener('click', playMusic);
+    if (openLetterBtn) openLetterBtn.addEventListener('click', openLetter);
+    if (releaseWishBtn) releaseWishBtn.addEventListener('click', releaseSkyMessage);
+    if (restartBtn) restartBtn.addEventListener('click', restartStory);
+
+    document.querySelectorAll('[data-next]').forEach(btn => btn.addEventListener('click', nextPage));
+    document.querySelectorAll('[data-prev]').forEach(btn => btn.addEventListener('click', prevPage));
 
     document.addEventListener('keydown', (event) => {
       if (event.key === 'ArrowRight') nextPage();
       if (event.key === 'ArrowLeft') prevPage();
     });
 
-    pages.forEach(page => {
-      page.addEventListener('touchstart', handleTouchStart, { passive: true });
-      page.addEventListener('touchend', handleTouchEnd, { passive: true });
+    let startX = 0;
+    let endX = 0;
+    pages.forEach((page) => {
+      page.addEventListener('touchstart', (e) => {
+        startX = e.changedTouches[0].screenX;
+      }, { passive: true });
+      page.addEventListener('touchend', (e) => {
+        endX = e.changedTouches[0].screenX;
+        const delta = endX - startX;
+        if (Math.abs(delta) > 70) {
+          if (delta < 0) nextPage();
+          else prevPage();
+        }
+      }, { passive: true });
     });
 
-    let touchStartX = 0;
-    let touchEndX = 0;
-
-    function handleTouchStart(event) {
-      touchStartX = event.changedTouches[0].screenX;
-    }
-
-    function handleTouchEnd(event) {
-      touchEndX = event.changedTouches[0].screenX;
-      const delta = touchEndX - touchStartX;
-      if (Math.abs(delta) > 70) {
-        if (delta < 0) nextPage();
-        else prevPage();
-      }
-    }
-
     const lanternPage = document.querySelector('.lantern-page');
-    for (let i = 0; i < 100; i++) {
-      const star = document.createElement('div');
-      star.className = 'star';
-      star.style.top = Math.random() * 100 + '%';
-      star.style.left = Math.random() * 100 + '%';
-      star.style.animationDuration = (2 + Math.random() * 3) + 's';
-      lanternPage.appendChild(star);
-    }
+    if (lanternPage) {
+      for (let i = 0; i < 100; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        star.style.top = Math.random() * 100 + '%';
+        star.style.left = Math.random() * 100 + '%';
+        star.style.animationDuration = (2 + Math.random() * 3) + 's';
+        lanternPage.appendChild(star);
+      }
 
-    for (let i = 0; i < 18; i++) {
-      const firefly = document.createElement('div');
-      firefly.className = 'firefly';
-      firefly.style.top = (55 + Math.random() * 40) + '%';
-      firefly.style.left = Math.random() * 100 + '%';
-      firefly.style.animationDuration = (4 + Math.random() * 4) + 's';
-      firefly.style.animationDelay = (Math.random() * 3) + 's';
-      lanternPage.appendChild(firefly);
+      for (let i = 0; i < 18; i++) {
+        const firefly = document.createElement('div');
+        firefly.className = 'firefly';
+        firefly.style.top = (55 + Math.random() * 40) + '%';
+        firefly.style.left = Math.random() * 100 + '%';
+        firefly.style.animationDuration = (4 + Math.random() * 4) + 's';
+        firefly.style.animationDelay = (Math.random() * 3) + 's';
+        lanternPage.appendChild(firefly);
+      }
     }
 
     const canvas = document.getElementById('lanternCanvas');
-    const ctx = canvas.getContext('2d');
-
-    function resizeCanvas() {
-      canvas.width = lanternPage.offsetWidth;
-      canvas.height = lanternPage.offsetHeight;
-    }
-
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-
+    const ctx = canvas ? canvas.getContext('2d') : null;
     const lanterns = [];
 
+    function resizeCanvas() {
+      if (!canvas || !lanternPage) return;
+      canvas.width = lanternPage.clientWidth;
+      canvas.height = lanternPage.clientHeight;
+    }
+
     class Lantern {
-      constructor(x = null, y = null, label = '', special = false) {
-        this.x = x !== null ? x : Math.random() * canvas.width;
-        this.y = y !== null ? y : canvas.height + Math.random() * 200;
-        this.width = special ? 20 : 14;
-        this.height = special ? 32 : 24;
-        this.speed = special ? 0.72 : 0.22 + Math.random() * 0.22;
-        this.drift = (Math.random() - 0.5) * 0.22;
+      constructor(x, y, label = '', special = false, targetY = null) {
+        this.x = x;
+        this.y = y;
         this.label = label;
         this.special = special;
+        this.targetY = targetY;
+        this.width = special ? 20 : 14;
+        this.height = special ? 32 : 24;
+        this.speed = special ? 0.42 : 0.22 + Math.random() * 0.22;
+        this.drift = (Math.random() - 0.5) * 0.22;
         this.alpha = 1;
+        this.pauseFrames = special && targetY !== null ? 120 : 0;
         this.sparkleOffset = Math.random() * 100;
       }
 
-      drawLanternBody() {
+      draw() {
+        if (!ctx) return;
         ctx.save();
+        ctx.globalAlpha = this.alpha;
         ctx.shadowColor = this.special ? 'rgba(255,220,140,0.95)' : 'rgba(255,177,88,0.95)';
         ctx.shadowBlur = this.special ? 32 : 22;
 
-        const bodyGradient = ctx.createLinearGradient(this.x, this.y, this.x, this.y + this.height);
-        bodyGradient.addColorStop(0, this.special ? 'rgba(255, 232, 176, 0.98)' : 'rgba(255, 210, 132, 0.95)');
-        bodyGradient.addColorStop(1, this.special ? 'rgba(255, 160, 72, 0.98)' : 'rgba(255, 138, 55, 0.95)');
-
-        ctx.fillStyle = bodyGradient;
-        ctx.globalAlpha = this.alpha;
+        const gradient = ctx.createLinearGradient(this.x, this.y, this.x, this.y + this.height);
+        gradient.addColorStop(0, this.special ? 'rgba(255, 232, 176, 0.98)' : 'rgba(255, 210, 132, 0.95)');
+        gradient.addColorStop(1, this.special ? 'rgba(255, 160, 72, 0.98)' : 'rgba(255, 138, 55, 0.95)');
+        ctx.fillStyle = gradient;
 
         ctx.beginPath();
         ctx.roundRect(this.x - this.width / 2, this.y - this.height / 2, this.width, this.height, 4);
@@ -797,42 +822,49 @@ You did not deserve the pain that came from my actions, especially from someone 
         ctx.stroke();
 
         if (this.special) {
-          for (let i = 0; i < 3; i++) {
-            const sparkleY = this.y + this.height / 2 + (i * 8) + ((Date.now() / 60 + this.sparkleOffset) % 8);
+          for (let i = 0; i < 4; i++) {
+            const sparkleY = this.y + this.height / 2 + (i * 7) + ((Date.now() / 60 + this.sparkleOffset) % 9);
             ctx.beginPath();
-            ctx.fillStyle = `rgba(255, 225, 155, ${0.22 - i * 0.05})`;
-            ctx.arc(this.x + (i - 1) * 4, sparkleY, 2.2 - i * 0.35, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(255, 225, 155, ${0.26 - i * 0.05})`;
+            ctx.arc(this.x + (i - 1.5) * 3.6, sparkleY, 2.2 - i * 0.3, 0, Math.PI * 2);
             ctx.fill();
           }
         }
 
-        ctx.restore();
-      }
+        if (this.label) {
+          ctx.font = this.special ? '18px Georgia' : '14px Georgia';
+          ctx.textAlign = 'center';
+          ctx.fillStyle = this.special ? 'rgba(255,245,220,0.98)' : 'rgba(255,255,255,0.9)';
+          ctx.shadowColor = 'rgba(255,230,170,0.9)';
+          ctx.shadowBlur = this.special ? 16 : 8;
+          ctx.fillText(this.label, this.x, this.y - this.height);
+        }
 
-      drawLabel() {
-        if (!this.label) return;
-
-        ctx.save();
-        ctx.globalAlpha = this.alpha;
-        ctx.font = this.special ? '18px Georgia' : '14px Georgia';
-        ctx.textAlign = 'center';
-        ctx.fillStyle = this.special ? 'rgba(255,245,220,0.98)' : 'rgba(255,255,255,0.9)';
-        ctx.shadowColor = 'rgba(255,230,170,0.9)';
-        ctx.shadowBlur = this.special ? 16 : 8;
-        ctx.fillText(this.label, this.x, this.y - this.height);
         ctx.restore();
       }
 
       update() {
-        this.y -= this.speed;
-        this.x += this.drift;
+        if (!canvas) return;
+        if (this.special && this.targetY !== null) {
+          if (this.y > this.targetY) {
+            this.y -= this.speed;
+          } else if (this.pauseFrames > 0) {
+            this.pauseFrames -= 1;
+            this.drift *= 0.985;
+          } else {
+            this.y -= this.speed * 0.72;
+            this.x += this.drift * 0.55;
+          }
+        } else {
+          this.y -= this.speed;
+          this.x += this.drift;
+        }
 
-        if (this.special && this.y < canvas.height * 0.22) {
+        if (this.special && this.y < canvas.height * 0.16 && this.pauseFrames <= 0) {
           this.alpha -= 0.004;
         }
 
-        this.drawLanternBody();
-        this.drawLabel();
+        this.draw();
       }
 
       isOffScreen() {
@@ -841,45 +873,60 @@ You did not deserve the pain that came from my actions, especially from someone 
     }
 
     function spawnLantern(x = null) {
-      lanterns.push(new Lantern(
-        x !== null ? x : Math.random() * canvas.width,
-        canvas.height + 20 + Math.random() * 60
-      ));
+      if (!canvas) return;
+      const lx = x ?? Math.random() * canvas.width;
+      const ly = canvas.height + 20 + Math.random() * 60;
+      lanterns.push(new Lantern(lx, ly));
     }
 
-    function releaseNamedLantern() {
-      lanterns.push(new Lantern(canvas.width / 2, canvas.height - 30, herName, true));
-      document.getElementById('finalMessage').classList.add('show');
+    function releaseSkyMessage() {
+      if (!canvas || releasedMessages.has(skyMessage)) return;
+      releasedMessages.add(skyMessage);
+
+      const spacing = 22;
+      const totalWidth = skyMessage.length * spacing;
+      const startX = canvas.width / 2 - totalWidth / 2 + spacing / 2;
+      const baseY = canvas.height * 0.42;
+
+      for (let i = 0; i < skyMessage.length; i++) {
+        const char = skyMessage[i];
+        if (char === ' ') continue;
+        const wave = Math.sin(i * 0.55) * 10;
+        lanterns.push(new Lantern(startX + i * spacing, canvas.height - 40, char, true, baseY + wave));
+      }
+
+      if (skyGlow) skyGlow.classList.add('show');
+      if (finalMessage) finalMessage.classList.add('show');
     }
 
-    for (let i = 0; i < 28; i++) {
-      spawnLantern();
+    if (canvas) {
+      canvas.addEventListener('click', (e) => {
+        const rect = canvas.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        spawnLantern(x);
+      });
     }
 
-    canvas.addEventListener('click', (e) => {
-      const rect = canvas.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      spawnLantern(x);
-    });
-
-    function animate() {
+    function animateLanterns() {
+      if (!ctx || !canvas) return;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       for (let i = lanterns.length - 1; i >= 0; i--) {
         lanterns[i].update();
-        if (lanterns[i].isOffScreen()) {
-          lanterns.splice(i, 1);
-        }
+        if (lanterns[i].isOffScreen()) lanterns.splice(i, 1);
       }
 
       while (lanterns.length < 28) {
         spawnLantern();
       }
 
-      requestAnimationFrame(animate);
+      requestAnimationFrame(animateLanterns);
     }
 
-    animate();
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+    for (let i = 0; i < 28; i++) spawnLantern();
+    animateLanterns();
     showPage(0);
   </script>
 </body>
