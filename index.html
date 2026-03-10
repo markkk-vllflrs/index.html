@@ -535,15 +535,18 @@
     <source src="music.mp3" type="audio/mpeg" />
   </audio>
 
-  <div class="envelope-screen" id="intro" role="button" aria-label="Open the letter" tabindex="0">
+  <div class="envelope-screen" id="intro">
     <div class="envelope" id="envelope" role="button" aria-label="Open the letter" tabindex="0">
       <div class="letter-peek"></div>
       <div class="flap"></div>
     </div>
     <div class="envelope-text">
-      Tap the envelope to open the letter, then play the music when you are ready.
+      Tap the button below to open the letter, then play the music when you are ready.
     </div>
-    <button class="music-btn" onclick="event.stopPropagation(); playMusic();">Play Music</button>
+    <div style="display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-top:16px;">
+      <button class="music-btn" type="button" onclick="playMusic()">Play Music</button>
+      <button class="music-btn" type="button" onclick="openLetter()">Open Letter</button>
+    </div>
   </div>
 
   <div class="site-shell" id="siteShell">
@@ -716,79 +719,29 @@ If there is ever a chance to rebuild what I broke, I know it would take patience
     function openLetter() {
       if (introOpened) return;
       introOpened = true;
+
       const envelope = document.getElementById('envelope');
       const intro = document.getElementById('intro');
 
-      envelope.classList.add('open');
+      if (envelope) envelope.classList.add('open');
 
       setTimeout(() => {
-        intro.style.opacity = '0';
+        if (intro) intro.style.opacity = '0';
         setTimeout(() => {
-          intro.style.display = 'none';
+          if (intro) intro.style.display = 'none';
           playMusic();
         }, 800);
       }, 700);
     }
 
-    function showPage(index) {
-      pages.forEach((page, i) => {
-        page.classList.toggle('active', i === index);
-      });
-      currentPage = index;
-
-      const pageNumber = currentPage + 1;
-      if (typewriterMessages[pageNumber] && !typedPages.has(pageNumber)) {
-        typedPages.add(pageNumber);
-        const target = document.getElementById(`typewriterText${pageNumber}`);
-        if (target) {
-          target.textContent = '';
-          startTypewriter(typewriterMessages[pageNumber], target, 28);
-        }
-      }
-
-      if (pageNumber === 7 && !lanternPageMusicStarted) {
-        lanternPageMusicStarted = true;
-        fadeInMusic();
-      }
-    }
-
-    function nextPage() {
-      if (currentPage < pages.length - 1) {
-        showPage(currentPage + 1);
-      }
-    }
-
-    function prevPage() {
-      if (currentPage > 0) {
-        showPage(currentPage - 1);
-      }
-    }
-
-    function goToFirstPage() {
-      const envelopeEl = document.getElementById('envelope');
-    const introEl = document.getElementById('intro');
-
-    introEl.addEventListener('click', openLetter);
-    introEl.addEventListener('touchend', (event) => {
-      event.preventDefault();
-      openLetter();
-    }, { passive: false });
-    introEl.addEventListener('keydown', (event) => {
-      if (event.key === 'Enter' || event.key === ' ') {
+    const envelopeEl = document.getElementById('envelope');
+    if (envelopeEl) {
+      envelopeEl.addEventListener('click', openLetter);
+      envelopeEl.addEventListener('touchend', (event) => {
         event.preventDefault();
         openLetter();
-      }
-    });
-
-    envelopeEl.addEventListener('click', (event) => {
-      event.stopPropagation();
-      openLetter();
-    });
-    envelopeEl.addEventListener('touchend', (event) => {
-      event.preventDefault();
-      event.stopPropagation();
-      openLetter();
-    }, { passive: false });
+      }, { passive: false });
+    }
 
     showPage(0);
     }
