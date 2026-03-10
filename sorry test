@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For You</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Georgia", serif;
+    }
+
+    body {
+      background: linear-gradient(to bottom, #fdf6f7, #f8e9ec);
+      color: #4b2e2e;
+      line-height: 1.8;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 850px;
+      margin: auto;
+      padding: 50px 20px;
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .hero-content {
+      background: rgba(255, 255, 255, 0.75);
+      padding: 40px 30px;
+      border-radius: 24px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      max-width: 750px;
+      animation: fadeIn 1.5s ease;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      color: #7b3f46;
+    }
+
+    h2 {
+      font-size: 1.7rem;
+      margin-bottom: 15px;
+      color: #8f4d56;
+    }
+
+    p {
+      font-size: 1.05rem;
+      margin-bottom: 15px;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 12px 22px;
+      background: #a85d67;
+      color: white;
+      text-decoration: none;
+      border-radius: 999px;
+      transition: 0.3s ease;
+      cursor: pointer;
+      border: none;
+      font-size: 1rem;
+    }
+
+    .btn:hover {
+      background: #8f4d56;
+      transform: translateY(-2px);
+    }
+
+    .section {
+      background: rgba(255, 255, 255, 0.78);
+      margin: 30px 0;
+      padding: 30px;
+      border-radius: 22px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.9s ease;
+    }
+
+    .section.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .signature {
+      margin-top: 25px;
+      font-style: italic;
+      font-size: 1.1rem;
+      color: #6d3c42;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 30px 20px 50px;
+      color: #7d5c60;
+      font-size: 0.95rem;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(25px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      h2 {
+        font-size: 1.4rem;
+      }
+
+      .hero-content,
+      .section {
+        padding: 24px 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <section class="hero">
+    <div class="hero-content">
+      <h1>To the Woman I Hurt</h1>
+      <p>
+        This website is not here to erase what I did.
+        It is here because I want to take full responsibility for the pain I caused you.
+      </p>
+      <button class="btn" onclick="scrollToContent()">Read My Heart</button>
+    </div>
+  </section>
+
+  <div class="container" id="content">
+    <div class="section">
+      <h2>I Am Sorry</h2>
+      <p>
+        I know that my actions hurt you deeply, and I want to say this clearly:
+        I am truly sorry.
+      </p>
+      <p>
+        Not just because things became difficult, and not just because I am afraid of losing you,
+        but because I know I caused pain to someone who means so much to me.
+      </p>
+      <p>
+        You did not deserve to be hurt by me.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>I Take Responsibility</h2>
+      <p>
+        I do not want to hide behind excuses or make my mistake sound smaller than it really is.
+      </p>
+      <p>
+        What I did was wrong. I understand that apologies mean little if they are not honest,
+        and honesty means admitting fully that I failed you in a way that cut deep.
+      </p>
+      <p>
+        I own that. Completely.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>I Understand Your Pain</h2>
+      <p>
+        I know that pain like this is not just about one moment. It can affect trust, peace of mind,
+        and the way you look at everything that came before it.
+      </p>
+      <p>
+        I understand that what happened may have made you feel disappointed, disrespected, confused,
+        or emotionally tired. And knowing that I caused those feelings in you breaks me.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>What I Am Learning</h2>
+      <p>
+        I am learning that love is not only about affection, words, or good intentions.
+        It is also about discipline, honesty, and protecting the heart of the person you love.
+      </p>
+      <p>
+        I failed in that, and I do not want to stay the same person who caused you this pain.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>What I Want You to Know</h2>
+      <p>
+        I am not asking you to ignore your pain.
+        I am not asking you to forgive me right away.
+        I am not asking you to pretend everything is okay.
+      </p>
+      <p>
+        I only want to be truthful with you and let you know that I see the weight of what I did.
+      </p>
+      <p>
+        And if there is ever any chance for me to rebuild what I broke,
+        I know it has to be through change, consistency, and patience.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>No Pressure, Only Honesty</h2>
+      <p>
+        Whatever you feel right now is valid.
+        Whatever time you need is valid.
+      </p>
+      <p>
+        This message is not meant to pressure you.
+        It is simply my heart trying to be accountable,
+        because you deserve truth, respect, and sincerity from me.
+      </p>
+      <p class="signature">
+        With remorse and love,<br />
+        Mark
+      </p>
+    </div>
+  </div>
+
+  <div class="footer">
+    Made with sincerity, not excuses.
+  </div>
+
+  <script>
+    function scrollToContent() {
+      document.getElementById("content").scrollIntoView({
+        behavior: "smooth"
+      });
+    }
+
+    const sections = document.querySelectorAll(".section");
+
+    const revealSections = () => {
+      const triggerBottom = window.innerHeight * 0.88;
+
+      sections.forEach(section => {
+        const sectionTop = section.getBoundingClientRect().top;
+
+        if (sectionTop < triggerBottom) {
+          section.classList.add("show");
+        }
+      });
+    };
+
+    window.addEventListener("scroll", revealSections);
+    window.addEventListener("load", revealSections);
+  </script>
+</body>
+</html>
