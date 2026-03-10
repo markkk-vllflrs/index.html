@@ -32,6 +32,7 @@
       flex-direction: column;
       z-index: 9999;
       transition: opacity 0.8s ease;
+      padding: 24px;
     }
 
     .envelope {
@@ -95,6 +96,20 @@
       font-size: 1rem;
       text-align: center;
       padding: 0 20px;
+      max-width: 320px;
+      line-height: 1.6;
+    }
+
+    .music-btn {
+      margin-top: 16px;
+      padding: 11px 18px;
+      border: none;
+      border-radius: 999px;
+      background: #a85d67;
+      color: white;
+      cursor: pointer;
+      font-size: 0.95rem;
+      box-shadow: 0 8px 18px rgba(168, 93, 103, 0.22);
     }
 
     .container {
@@ -144,11 +159,55 @@
       font-style: italic;
     }
 
+    .typewriter {
+      min-height: 150px;
+      white-space: pre-wrap;
+    }
+
+    .gallery-section {
+      padding: 10px 0 20px;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    .gallery-card {
+      background: rgba(255,255,255,0.88);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+    }
+
+    .gallery-card img {
+      display: block;
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      background: #f1dfe3;
+    }
+
+    .gallery-caption {
+      padding: 12px 14px;
+      font-size: 0.95rem;
+      color: #6b454d;
+      line-height: 1.6;
+    }
+
+    .gallery-note {
+      opacity: 0.78;
+      font-size: 0.95rem;
+    }
+
     .lantern-scene {
       position: relative;
       min-height: 100vh;
       background:
-        radial-gradient(circle at 50% 20%, rgba(255,255,255,0.08), transparent 25%),
+        radial-gradient(circle at 50% 18%, rgba(255,255,255,0.08), transparent 22%),
+        radial-gradient(circle at 78% 16%, rgba(255, 239, 188, 0.18), transparent 10%),
         linear-gradient(to top, #02020a, #0b0b2b, #161640);
       overflow: hidden;
       display: flex;
@@ -157,6 +216,19 @@
       text-align: center;
       color: white;
       padding: 40px 20px;
+    }
+
+    .moon {
+      position: absolute;
+      top: 70px;
+      right: 9%;
+      width: 92px;
+      height: 92px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #fffdf0, #f7efc2 45%, #d9cd93 80%);
+      box-shadow: 0 0 38px rgba(255, 241, 180, 0.35);
+      z-index: 1;
+      opacity: 0.9;
     }
 
     .lantern-message {
@@ -191,6 +263,20 @@
 
     .wish-btn:hover {
       transform: translateY(-2px);
+    }
+
+    .final-message {
+      margin-top: 22px;
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 1s ease, transform 1s ease;
+      font-size: 1rem;
+      color: rgba(255, 247, 220, 0.98);
+    }
+
+    .final-message.show {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     #lanternCanvas {
@@ -242,40 +328,118 @@
       color: #7d5c60;
       opacity: 0.8;
       background: #f7e6ea;
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    @media (max-width: 820px) {
+      .gallery-grid {
+        grid-template-columns: 1fr 1fr;
+      }
     }
 
     @media (max-width: 640px) {
+      body {
+        -webkit-text-size-adjust: 100%;
+      }
+
+      .envelope {
+        width: 210px;
+        height: 132px;
+      }
+
+      .letter-peek {
+        width: 155px;
+        height: 78px;
+      }
+
+      .container {
+        padding: 74px 14px 42px;
+      }
+
       h1 {
-        font-size: 2rem;
+        font-size: 1.9rem;
+        line-height: 1.3;
       }
 
       h2 {
-        font-size: 1.35rem;
+        font-size: 1.3rem;
+      }
+
+      p {
+        font-size: 1rem;
+        line-height: 1.75;
       }
 
       .section {
-        padding: 24px 18px;
+        padding: 22px 16px;
+        border-radius: 18px;
+        margin-bottom: 18px;
+      }
+
+      .typewriter {
+        min-height: 180px;
+      }
+
+      .gallery-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+
+      .gallery-card img {
+        height: 240px;
+      }
+
+      .lantern-scene {
+        min-height: 92vh;
+        padding: 30px 14px;
       }
 
       .lantern-message {
-        padding: 20px;
+        padding: 12px;
+        max-width: 95%;
       }
 
       .lantern-message h2 {
-        font-size: 1.6rem;
+        font-size: 1.55rem;
+      }
+
+      .wish-btn,
+      .music-btn {
+        width: 100%;
+        max-width: 260px;
+        font-size: 0.98rem;
+        padding: 13px 18px;
+      }
+
+      .moon {
+        width: 72px;
+        height: 72px;
+        top: 60px;
+        right: 8%;
+      }
+
+      .footer {
+        font-size: 0.9rem;
+        padding: 24px 16px 36px;
       }
     }
   </style>
 </head>
 <body>
+  <audio id="bgMusic" loop>
+    <source src="music.mp3" type="audio/mpeg" />
+  </audio>
+
   <div class="envelope-screen" id="intro">
     <div class="envelope" onclick="openLetter()" id="envelope">
       <div class="letter-peek"></div>
       <div class="flap"></div>
     </div>
     <div class="envelope-text">
-      Tap the envelope to open the letter
+      Tap the envelope to open the letter, then play the music when you are ready.
     </div>
+    <button class="music-btn" onclick="playMusic()">Play Music</button>
   </div>
 
   <div class="container">
@@ -287,8 +451,7 @@
 
     <div class="section">
       <h2>I Am Truly Sorry</h2>
-      <p>I know that my actions hurt you deeply, and I want to say this clearly without excuses — I am truly sorry.</p>
-      <p>You did not deserve the pain that came from my actions, especially from someone who is supposed to care for you.</p>
+      <div class="typewriter" id="typewriterText"></div>
     </div>
 
     <div class="section">
@@ -304,32 +467,61 @@
       <p>Knowing that I caused that pain in you is something I carry heavily and sincerely.</p>
     </div>
 
+    <div class="section gallery-section">
+      <h2>Our Little Moments</h2>
+      <p class="gallery-note">You can replace these placeholders with your own photos later.</p>
+      <div class="gallery-grid">
+        <div class="gallery-card">
+          <img src="https://placehold.co/800x1000/f1dfe3/7b3f46?text=Photo+1" alt="Memory 1" />
+          <div class="gallery-caption">A little moment I would always want to remember.</div>
+        </div>
+        <div class="gallery-card">
+          <img src="https://placehold.co/800x1000/f1dfe3/7b3f46?text=Photo+2" alt="Memory 2" />
+          <div class="gallery-caption">One of the memories that still makes my heart feel warm.</div>
+        </div>
+        <div class="gallery-card">
+          <img src="https://placehold.co/800x1000/f1dfe3/7b3f46?text=Photo+3" alt="Memory 3" />
+          <div class="gallery-caption">A quiet reminder that what we have is precious to me.</div>
+        </div>
+      </div>
+    </div>
+
     <div class="section">
       <h2>My Intention</h2>
       <p>I am not asking you to rush forgiveness.</p>
       <p>I only want to be honest about my regret and show that I understand the weight of what I did.</p>
       <p>If there is ever a chance to rebuild what I broke, I know it would take patience, consistency, and real change from me.</p>
-      <p class="signature">— Mark</p>
+      <p class="signature">With love and sincerity,<br />Mark</p>
     </div>
   </div>
 
   <section class="lantern-scene">
+    <div class="moon"></div>
     <div class="lantern-message">
       <h2>A Quiet Wish</h2>
       <p>Tonight, these lanterns rise into the sky carrying one quiet wish — that healing and peace find their way to your heart.</p>
       <p>I am deeply sorry for the pain I caused you.</p>
       <p>Click anywhere on the sky to release a lantern.</p>
       <button class="wish-btn" onclick="releaseNamedLantern()">Release a Wish</button>
+      <div class="final-message" id="finalMessage">You are worth every effort, every change, and every promise I will keep.</div>
     </div>
     <canvas id="lanternCanvas"></canvas>
   </section>
 
   <div class="footer">
-    Made with honesty.
+    Made with honesty.<br />
+    Replace the music file, photos, and message with your personal touches before sending it.
   </div>
 
   <script>
     const herName = "Her Name";
+    const typewriterMessage = `I know that my actions hurt you deeply, and I want to say this clearly without excuses — I am truly sorry.\n\nYou did not deserve the pain that came from my actions, especially from someone who is supposed to care for you.`;
+    let typewriterStarted = false;
+
+    function playMusic() {
+      const audio = document.getElementById("bgMusic");
+      audio.play().catch(() => {});
+    }
 
     function openLetter() {
       const envelope = document.getElementById("envelope");
@@ -341,6 +533,7 @@
         intro.style.opacity = "0";
         setTimeout(() => {
           intro.style.display = "none";
+          playMusic();
         }, 800);
       }, 700);
     }
@@ -356,6 +549,24 @@
           section.classList.add("show");
         }
       });
+
+      const typewriterBox = document.getElementById("typewriterText");
+      if (!typewriterStarted && typewriterBox.getBoundingClientRect().top < window.innerHeight * 0.9) {
+        typewriterStarted = true;
+        startTypewriter(typewriterMessage, typewriterBox, 28);
+      }
+    }
+
+    function startTypewriter(text, element, speed) {
+      let index = 0;
+      function type() {
+        if (index < text.length) {
+          element.textContent += text.charAt(index);
+          index++;
+          setTimeout(type, speed);
+        }
+      }
+      type();
     }
 
     window.addEventListener("scroll", revealSections);
@@ -397,24 +608,25 @@
       constructor(x = null, y = null, label = "", special = false) {
         this.x = x !== null ? x : Math.random() * canvas.width;
         this.y = y !== null ? y : canvas.height + Math.random() * 200;
-        this.width = special ? 18 : 14;
-        this.height = special ? 30 : 24;
-        this.speed = special ? 0.75 : 0.35 + Math.random() * 0.35;
-        this.drift = (Math.random() - 0.5) * 0.3;
+        this.width = special ? 20 : 14;
+        this.height = special ? 32 : 24;
+        this.speed = special ? 0.72 : 0.22 + Math.random() * 0.22;
+        this.drift = (Math.random() - 0.5) * 0.22;
         this.glow = 0.7 + Math.random() * 0.3;
         this.label = label;
         this.special = special;
         this.alpha = 1;
+        this.sparkleOffset = Math.random() * 100;
       }
 
       drawLanternBody() {
         ctx.save();
-        ctx.shadowColor = this.special ? "rgba(255,220,140,0.95)" : "orange";
-        ctx.shadowBlur = this.special ? 28 : 18;
+        ctx.shadowColor = this.special ? "rgba(255,220,140,0.95)" : "rgba(255,177,88,0.95)";
+        ctx.shadowBlur = this.special ? 32 : 22;
 
         const bodyGradient = ctx.createLinearGradient(this.x, this.y, this.x, this.y + this.height);
-        bodyGradient.addColorStop(0, this.special ? "rgba(255, 230, 170, 0.98)" : "rgba(255, 205, 120, 0.95)");
-        bodyGradient.addColorStop(1, this.special ? "rgba(255, 165, 75, 0.98)" : "rgba(255, 145, 60, 0.95)");
+        bodyGradient.addColorStop(0, this.special ? "rgba(255, 232, 176, 0.98)" : "rgba(255, 210, 132, 0.95)");
+        bodyGradient.addColorStop(1, this.special ? "rgba(255, 160, 72, 0.98)" : "rgba(255, 138, 55, 0.95)");
 
         ctx.fillStyle = bodyGradient;
         ctx.globalAlpha = this.alpha;
@@ -433,6 +645,16 @@
         ctx.strokeStyle = "rgba(220,220,220,0.5)";
         ctx.stroke();
 
+        if (this.special) {
+          for (let i = 0; i < 3; i++) {
+            const sparkleY = this.y + this.height / 2 + (i * 8) + ((Date.now() / 60 + this.sparkleOffset) % 8);
+            ctx.beginPath();
+            ctx.fillStyle = `rgba(255, 225, 155, ${0.22 - i * 0.05})`;
+            ctx.arc(this.x + (i - 1) * 4, sparkleY, 2.2 - i * 0.35, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        }
+
         ctx.restore();
       }
 
@@ -445,7 +667,7 @@
         ctx.textAlign = "center";
         ctx.fillStyle = this.special ? "rgba(255,245,220,0.98)" : "rgba(255,255,255,0.9)";
         ctx.shadowColor = "rgba(255,230,170,0.9)";
-        ctx.shadowBlur = this.special ? 14 : 8;
+        ctx.shadowBlur = this.special ? 16 : 8;
         ctx.fillText(this.label, this.x, this.y - this.height);
         ctx.restore();
       }
@@ -476,6 +698,7 @@
 
     function releaseNamedLantern() {
       lanterns.push(new Lantern(canvas.width / 2, canvas.height - 30, herName, true));
+      document.getElementById("finalMessage").classList.add("show");
     }
 
     for (let i = 0; i < 28; i++) {
