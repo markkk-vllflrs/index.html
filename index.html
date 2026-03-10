@@ -536,16 +536,14 @@
   </audio>
 
   <div class="envelope-screen" id="intro">
-    <div style="background:#fff8fa; padding:28px 22px; border-radius:20px; box-shadow:0 14px 30px rgba(0,0,0,0.12); max-width:340px; width:100%; text-align:center;">
-      <div style="font-size:1.4rem; color:#7b3f46; margin-bottom:12px;">For You</div>
-      <div class="envelope-text" style="margin-top:0; padding:0; max-width:none;">
-        Press the button below to start reading.
-      </div>
-      <div style="display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-top:18px;">
-        <button class="music-btn" type="button" onclick="playMusic()">Play Music</button>
-        <button class="music-btn" type="button" onclick="openLetter()">Open Letter</button>
-      </div>
+    <div class="envelope" onclick="openLetter()" id="envelope">
+      <div class="letter-peek"></div>
+      <div class="flap"></div>
     </div>
+    <div class="envelope-text">
+      Tap the envelope to open the letter, then play the music when you are ready.
+    </div>
+    <button class="music-btn" onclick="playMusic()">Play Music</button>
   </div>
 
   <div class="site-shell" id="siteShell">
@@ -713,24 +711,57 @@ If there is ever a chance to rebuild what I broke, I know it would take patience
     });
     }
 
-    let introOpened = false;
-
     function openLetter() {
-      if (introOpened) return;
-      introOpened = true;
-
+      const envelope = document.getElementById('envelope');
       const intro = document.getElementById('intro');
 
+      envelope.classList.add('open');
+
       setTimeout(() => {
-        if (intro) intro.style.opacity = '0';
+        intro.style.opacity = '0';
         setTimeout(() => {
-          if (intro) intro.style.display = 'none';
+          intro.style.display = 'none';
           playMusic();
         }, 800);
       }, 700);
     }
 
-    showPage(0);
+    function showPage(index) {
+      pages.forEach((page, i) => {
+        page.classList.toggle('active', i === index);
+      });
+      currentPage = index;
+
+      const pageNumber = currentPage + 1;
+      if (typewriterMessages[pageNumber] && !typedPages.has(pageNumber)) {
+        typedPages.add(pageNumber);
+        const target = document.getElementById(`typewriterText${pageNumber}`);
+        if (target) {
+          target.textContent = '';
+          startTypewriter(typewriterMessages[pageNumber], target, 28);
+        }
+      }
+
+      if (pageNumber === 7 && !lanternPageMusicStarted) {
+        lanternPageMusicStarted = true;
+        fadeInMusic();
+      }
+    }
+
+    function nextPage() {
+      if (currentPage < pages.length - 1) {
+        showPage(currentPage + 1);
+      }
+    }
+
+    function prevPage() {
+      if (currentPage > 0) {
+        showPage(currentPage - 1);
+      }
+    }
+
+    function goToFirstPage() {
+      showPage(0);
     }
 
     function startTypewriter(text, element, speed) {
