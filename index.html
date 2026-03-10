@@ -536,16 +536,15 @@
   </audio>
 
   <div class="envelope-screen" id="intro">
-    <div class="envelope" id="envelope" role="button" aria-label="Open the letter" tabindex="0">
-      <div class="letter-peek"></div>
-      <div class="flap"></div>
-    </div>
-    <div class="envelope-text">
-      Tap the button below to open the letter, then play the music when you are ready.
-    </div>
-    <div style="display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-top:16px;">
-      <button class="music-btn" type="button" onclick="playMusic()">Play Music</button>
-      <button class="music-btn" type="button" onclick="openLetter()">Open Letter</button>
+    <div style="background:#fff8fa; padding:28px 22px; border-radius:20px; box-shadow:0 14px 30px rgba(0,0,0,0.12); max-width:340px; width:100%; text-align:center;">
+      <div style="font-size:1.4rem; color:#7b3f46; margin-bottom:12px;">For You</div>
+      <div class="envelope-text" style="margin-top:0; padding:0; max-width:none;">
+        Press the button below to start reading.
+      </div>
+      <div style="display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-top:18px;">
+        <button class="music-btn" type="button" onclick="playMusic()">Play Music</button>
+        <button class="music-btn" type="button" onclick="openLetter()">Open Letter</button>
+      </div>
     </div>
   </div>
 
@@ -720,10 +719,7 @@ If there is ever a chance to rebuild what I broke, I know it would take patience
       if (introOpened) return;
       introOpened = true;
 
-      const envelope = document.getElementById('envelope');
       const intro = document.getElementById('intro');
-
-      if (envelope) envelope.classList.add('open');
 
       setTimeout(() => {
         if (intro) intro.style.opacity = '0';
@@ -732,15 +728,6 @@ If there is ever a chance to rebuild what I broke, I know it would take patience
           playMusic();
         }, 800);
       }, 700);
-    }
-
-    const envelopeEl = document.getElementById('envelope');
-    if (envelopeEl) {
-      envelopeEl.addEventListener('click', openLetter);
-      envelopeEl.addEventListener('touchend', (event) => {
-        event.preventDefault();
-        openLetter();
-      }, { passive: false });
     }
 
     showPage(0);
